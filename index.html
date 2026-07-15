@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <!-- 新增PWA全屏关键代码，去掉底部浏览器栏 -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>手机主页面 · iPhone 11</title>
+    <title>Enenji </title>
     <style>
         :root {
             --bg-start: #1a1a2e;
@@ -37,11 +33,13 @@
             --card-bg: rgba(255, 255, 255, 0.05);
             --card-hover-bg: rgba(255, 255, 255, 0.09);
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             display: flex;
             align-items: center;
@@ -56,6 +54,7 @@
             -webkit-tap-highlight-color: transparent;
             padding: 16px;
         }
+
         .phone-frame {
             position: relative;
             width: 414px;
@@ -71,6 +70,7 @@
             transform: translateY(-4px);
             box-shadow: 0 0 0 3px #1a1a2e, 0 0 0 6px #111122, 0 0 0 8px #1c1c32, 0 0 0 10px #0a0a16, 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 150px rgba(90, 100, 180, 0.18);
         }
+
         .screen {
             position: absolute;
             top: 12px;
@@ -84,6 +84,7 @@
             flex-direction: column;
             cursor: default;
         }
+
         .wallpaper {
             position: absolute;
             inset: 0;
@@ -146,6 +147,7 @@
                 transform: translate(-25px, -10px) scale(1.05);
             }
         }
+
         .particles {
             position: absolute;
             inset: 0;
@@ -221,6 +223,7 @@
                 transform: translateY(-650px) translateX(-10px) scale(0);
             }
         }
+
         .content-layer {
             position: relative;
             z-index: 2;
@@ -236,6 +239,7 @@
             pointer-events: none;
             transform: scale(0.96);
         }
+
         .status-bar {
             width: 100%;
             display: flex;
@@ -324,6 +328,7 @@
             background: #fff;
             border-radius: 0 1.5px 1.5px 0;
         }
+
         .time-widget {
             margin-top: 18px;
             flex-shrink: 0;
@@ -385,6 +390,7 @@
             color: var(--text-tertiary);
             margin-top: 2px;
         }
+
         .search-bar {
             margin-top: 22px;
             flex-shrink: 0;
@@ -422,6 +428,7 @@
             font-size: 13px;
             color: rgba(255, 255, 255, 0.45);
         }
+
         .app-icons-row {
             margin-top: auto;
             margin-bottom: auto;
@@ -556,6 +563,7 @@
             background: rgba(255, 255, 255, 0.75);
             width: 150px;
         }
+
         .toast {
             position: absolute;
             bottom: 80px;
@@ -582,6 +590,7 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
         /* API页面 */
         .api-page {
             position: absolute;
@@ -613,6 +622,7 @@
             background: rgba(255, 255, 255, 0.15);
             border-radius: 3px;
         }
+
         .api-header {
             display: flex;
             align-items: center;
@@ -688,6 +698,7 @@
                 opacity: 0.35;
             }
         }
+
         .api-body {
             flex: 1;
             padding: 16px 18px 20px 18px;
@@ -695,6 +706,7 @@
             flex-direction: column;
             gap: 16px;
         }
+
         .provider-chips {
             display: flex;
             gap: 8px;
@@ -724,6 +736,7 @@
             color: #fff;
             box-shadow: 0 2px 12px var(--accent-glow);
         }
+
         .input-group {
             display: flex;
             flex-direction: column;
@@ -789,6 +802,7 @@
         .input-icon-btn:active {
             transform: scale(0.88);
         }
+
         .api-btn {
             display: flex;
             align-items: center;
@@ -839,6 +853,7 @@
         .api-btn-row .api-btn {
             flex: 1;
         }
+
         .spinner {
             width: 16px;
             height: 16px;
@@ -853,6 +868,7 @@
                 transform: rotate(360deg);
             }
         }
+
         .model-list-section {
             display: flex;
             flex-direction: column;
@@ -965,6 +981,7 @@
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
         }
+
         .empty-state {
             text-align: center;
             padding: 30px 20px;
@@ -980,6 +997,7 @@
             font-size: 40px;
             opacity: 0.5;
         }
+
         /* 预设方案管理 */
         .preset-section {
             margin-top: 4px;
@@ -1058,10 +1076,12 @@
             background: rgba(255, 59, 48, 0.3);
             color: #fff;
         }
+
         .api-safe-bottom {
             height: 30px;
             flex-shrink: 0;
         }
+
         @media (max-width: 440px) {
             body {
                 padding: 0;
@@ -1231,6 +1251,7 @@
     </style>
 </head>
 <body>
+
     <div class="phone-frame">
         <div class="screen" id="screen">
             <div class="wallpaper">
@@ -1243,55 +1264,56 @@
                 <div class="particle"></div><div class="particle"></div><div class="particle"></div>
                 <div class="particle"></div><div class="particle"></div><div class="particle"></div>
             </div>
+
             <!-- 主屏幕 -->
-            <div class="content-layer" id="mainView">
+                        <div class="content-layer" id="mainView">
                 <div class="status-bar">
                     <div class="status-left"><span class="time-text" id="statusTime">9:41</span></div>
                     <div class="status-icons">
                         <div class="signal-bars"><div class="signal-bar"></div><div class="signal-bar"></div><div class="signal-bar"></div><div class="signal-bar"></div></div>
-                        <div class="wifi-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 12.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" fill="white" opacity="0.9" /><path d="M5.6 10.2a3.4 3.4 0 0 1 4.8 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8" /><path d="M3.4 7.8a6.5 6.5 0 0 1 9.2 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7" /><path d="M1.2 5.4a9.6 9.6 0 0 1 13.6 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6" /></svg></div>
-                        <div class="battery"><div class="battery-fill" id="batteryFill"></div><div class="battery-cap"></div></div>
+                        <div class="wifi-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 12.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" fill="white" opacity="0.9"/><path d="M5.6 10.2a3.4 3.4 0 0 1 4.8 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/><path d="M3.4 7.8a6.5 6.5 0 0 1 9.2 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/><path d="M1.2 5.4a9.6 9.6 0 0 1 13.6 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg></div>
+                        <div class="battery"><div class="battery-body"><div class="battery-fill" id="batteryFill"></div></div><div class="battery-cap"></div></div>
                     </div>
                 </div>
                 <div class="time-widget" id="timeWidget">
                     <div class="time-main"><span id="hours">14</span><span class="time-colon" id="colon">:</span><span id="minutes">30</span></div>
                     <div class="time-date" id="timeDate">2026年7月16日</div>
-                    <div class="timeGreeting" id="timeGreeting">下午好</div>
+                    <div class="time-greeting" id="timeGreeting">下午好</div>
                 </div>
                 <div class="search-bar" id="searchBar">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2" opacity="0.6" /><path d="M16.5 16.5l4 4" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /></svg>
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2" opacity="0.6"/><path d="M16.5 16.5l4 4" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/></svg>
                     <span class="search-text">搜索</span>
                 </div>
                 <div class="app-icons-row">
                     <div class="app-item" data-app="wechat" data-label="微信">
-                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-wechat"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M22 13c0 3.87-3.58 7-8 7-.7 0-1.38-.08-2.04-.22-.54.32-1.48.72-2.46.72-.22 0-.4-.18-.36-.4.04-.2.2-.68.38-1.1C8.3 18.1 7.5 16.9 7.5 15.5 7.5 12.46 10.58 10 14.5 10S22 12.46 22 15.5z" fill="white" opacity="0.95" /><path d="M26 18c0 2.5-2.5 4.5-5.5 4.5-.5 0-1-.06-1.5-.18-.4.22-1.1.52-1.8.52-.16 0-.3-.14-.28-.3.02-.14.14-.48.28-.78-.7-.6-1.2-1.4-1.2-2.3 0-1.9 2-3.5 4.5-3.5s4.5 1.6 4.5 3.5z" fill="white" opacity="0.75" /></svg></div>
-<span class="badge">3</span></div>
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-wechat"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M22 13c0 3.87-3.58 7-8 7-.7 0-1.38-.08-2.04-.22-.54.32-1.48.72-2.46.72-.22 0-.4-.18-.36-.4.04-.2.2-.68.38-1.1C8.3 18.1 7.5 16.9 7.5 15.5 7.5 12.46 10.58 10 14.5 10S22 12.46 22 15.5z" fill="white" opacity="0.95"/><path d="M26 18c0 2.5-2.5 4.5-5.5 4.5-.5 0-1-.06-1.5-.18-.4.22-1.1.52-1.8.52-.16 0-.3-.14-.28-.3.02-.14.14-.48.28-.78-.7-.6-1.2-1.4-1.2-2.3 0-1.9 2-3.5 4.5-3.5s4.5 1.6 4.5 3.5z" fill="white" opacity="0.75"/></svg></div><span class="badge">3</span></div>
                         <span class="app-label">微信</span>
                     </div>
                     <div class="app-item" data-app="api" data-label="API">
-                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-api"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="3" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><path d="M8 10l3 4-3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" /><path d="M20 10l-3 4 3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" /><line x1="13" y1="9" x2="15" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7" /></svg></div></div>
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-api"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="3" stroke="white" stroke-width="2" fill="none" opacity="0.9"/><path d="M8 10l3 4-3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/><path d="M20 10l-3 4 3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/><line x1="13" y1="9" x2="15" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/></svg></div></div>
                         <span class="app-label">API</span>
                     </div>
                     <div class="app-item" data-app="worldbook" data-label="世界书">
-                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-book"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><path d="M5 4h7l1.5 2H23a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><circle cx="10" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.8" /><ellipse cx="10" cy="14" rx="5" ry="2" stroke="white" stroke-width="1.5" fill="none" opacity="0.6" transform="rotate(-15 10 14)" /><line x1="10" y1="9" x2="10" y2="19" stroke="white" stroke-width="1.5" opacity="0.55" /><line x1="5" y1="14" x2="15" y2="14" stroke="white" stroke-width="1.5" opacity="0.55" /></svg></div></div>
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-book"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><path d="M5 4h7l1.5 2H23a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" stroke-width="2" fill="none" opacity="0.9"/><circle cx="10" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.8"/><ellipse cx="10" cy="14" rx="5" ry="2" stroke="white" stroke-width="1.5" fill="none" opacity="0.6" transform="rotate(-15 10 14)"/><line x1="10" y1="9" x2="10" y2="19" stroke="white" stroke-width="1.5" opacity="0.55"/><line x1="5" y1="14" x2="15" y2="14" stroke="white" stroke-width="1.5" opacity="0.55"/></svg></div></div>
                         <span class="app-label">世界书</span>
                     </div>
                     <div class="app-item" data-app="beauty" data-label="美化">
-                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-beauty"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="white" stroke-width="2" fill="none" opacity="0.85" /><circle cx="14" cy="14" r="4" fill="white" opacity="0.5" /><path d="M21 8l3-3" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.8" /><path d="M22.5 5.5l-1.5 1.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7" /><circle cx="22" cy="5" r="1.5" fill="white" opacity="0.9" /></svg></div></div>
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-beauty"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="white" stroke-width="2" fill="none" opacity="0.85"/><circle cx="14" cy="14" r="4" fill="white" opacity="0.5"/><path d="M21 8l3-3" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/><path d="M22.5 5.5l-1.5 1.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/><circle cx="22" cy="5" r="1.5" fill="white" opacity="0.9"/></svg></div></div>
                         <span class="app-label">美化</span>
                     </div>
                     <div class="app-item" data-app="settings" data-label="设置">
-                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-settings"><svg width="26" height="26" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><circle cx="14" cy="14" r="2" fill="white" opacity="0.8" /><line x1="14" y1="3" x2="14" y2="7" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="14" y1="21" x2="14" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="3" y1="14" x2="7" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="21" y1="14" x2="25" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="6.5" y1="6.5" x2="9" y2="9" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="19" y1="19" x2="21.5" y2="21.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="6.5" y1="21.5" x2="9" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="19" y1="9" x2="21.5" y2="6.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /></svg></div></div>
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-settings"><svg width="26" height="26" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.9"/><circle cx="14" cy="14" r="2" fill="white" opacity="0.8"/><line x1="14" y1="3" x2="14" y2="7" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/><line x1="14" y1="21" x2="14" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/><line x1="3" y1="14" x2="7" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/><line x1="21" y1="14" x2="25" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/><line x1="6.5" y1="6.5" x2="9" y2="9" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="19" y1="19" x2="21.5" y2="21.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="6.5" y1="21.5" x2="9" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/><line x1="19" y1="9" x2="21.5" y2="6.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/></svg></div></div>
                         <span class="app-label">设置</span>
                     </div>
                 </div>
                 <div class="home-indicator" id="homeIndicator"></div>
             </div>
+
             <!-- API管理页面 -->
             <div class="api-page" id="apiPage">
                 <div class="api-header">
                     <button class="api-back-btn" id="apiBackBtn" title="返回主屏幕">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
                     <span class="api-title">API 管理</span>
                     <div class="api-status-dot idle" id="apiStatusDot" title="连接状态"></div>
@@ -1305,6 +1327,7 @@
                         </div>
                         <div class="preset-list" id="presetList"></div>
                     </div>
+
                     <!-- 提供商预设 -->
                     <div class="input-group">
                         <span class="input-label">提供商预设</span>
@@ -1315,38 +1338,575 @@
                             <span class="provider-chip" data-provider="custom">自定义</span>
                         </div>
                     </div>
+
                     <!-- Base URL -->
                     <div class="input-group">
                         <span class="input-label">Base URL</span>
                         <div class="input-row">
                             <input type="text" id="apiBaseUrl" placeholder="https://api.openai.com/v1" value="https://api.openai.com/v1" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                             <button class="input-icon-btn" id="clearBaseUrlBtn" title="清空">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                             </button>
                         </div>
                     </div>
+
                     <!-- API Key -->
                     <div class="input-group">
                         <span class="input-label">API Key</span>
                         <div class="input-row">
                             <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                             <button class="input-icon-btn" id="toggleKeyBtn" title="显示/隐藏">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             </button>
                         </div>
                     </div>
+
                     <!-- 操作按钮 -->
                     <div class="api-btn-row">
                         <button class="api-btn api-btn-primary" id="fetchModelsBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m18 0a9 9 0 0 1-4.5 7.8M12 21a9 9 0 0 1-4.5-7.8M12 21V3" /></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m18 0a9 9 0 0 1-4.5 7.8M12 21a9 9 0 0 1-4.5-7.8M12 21V3"/></svg>
                             拉取模型
                         </button>
                         <button class="api-btn api-btn-secondary" id="testConnBtn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                             测试连接
                         </button>
                     </div>
+
                     <!-- 模型列表 -->
                     <div class="model-list-section" id="modelListSection">
                         <div class="model-list-header">
-                            <span class="model-list-title">可用模型
+                            <span class="model-list-title">可用模型</span>
+                            <span class="model-count" id="modelCount">0个</span>
+                        </div>
+                        <div id="modelListContainer">
+                            <div class="empty-state">
+                                <span class="empty-icon">-</span>
+                                <span>请填写 API 地址并点击「拉取模型」获取列表</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="api-safe-bottom"></div>
+            </div>
+
+            <div class="toast" id="toast"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // DOM元素
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const colonEl = document.getElementById('colon');
+            const timeDateEl = document.getElementById('timeDate');
+            const timeGreetingEl = document.getElementById('timeGreeting');
+            const statusTimeEl = document.getElementById('statusTime');
+            const batteryFill = document.getElementById('batteryFill');
+            const toast = document.getElementById('toast');
+            const timeWidget = document.getElementById('timeWidget');
+            const searchBar = document.getElementById('searchBar');
+            const homeIndicator = document.getElementById('homeIndicator');
+            const appItems = document.querySelectorAll('.app-item');
+            const mainView = document.getElementById('mainView');
+            const apiPage = document.getElementById('apiPage');
+            const apiBackBtn = document.getElementById('apiBackBtn');
+            const apiStatusDot = document.getElementById('apiStatusDot');
+            const apiBaseUrl = document.getElementById('apiBaseUrl');
+            const apiKey = document.getElementById('apiKey');
+            const fetchModelsBtn = document.getElementById('fetchModelsBtn');
+            const testConnBtn = document.getElementById('testConnBtn');
+            const modelListContainer = document.getElementById('modelListContainer');
+            const modelCount = document.getElementById('modelCount');
+            const toggleKeyBtn = document.getElementById('toggleKeyBtn');
+            const clearBaseUrlBtn = document.getElementById('clearBaseUrlBtn');
+            const providerChips = document.getElementById('providerChips');
+            const addPresetBtn = document.getElementById('addPresetBtn');
+            const presetListEl = document.getElementById('presetList');
+
+            // 状态
+            let currentProvider = 'openai';
+            let fetchedModels = [];
+            let selectedModelId = null;
+            let isApiPageOpen = false;
+            let presets = [];
+            let activePresetId = null;
+
+            // Toast
+            let toastTimer = null;
+            function showToast(message) {
+                if (toastTimer) clearTimeout(toastTimer);
+                toast.textContent = message;
+                toast.classList.add('show');
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    toastTimer = null;
+                }, 1800);
+            }
+
+            // 时间
+            function getWeekday(date) {
+                const days = ['日', '一', '二', '三', '四', '五', '六'];
+                return '星期' + days[date.getDay()];
+            }
+            function getGreeting(hour) {
+                if (hour >= 5 && hour < 8) return '清晨好';
+                if (hour >= 8 && hour < 12) return '上午好';
+                if (hour >= 12 && hour < 14) return '中午好';
+                if (hour >= 14 && hour < 17) return '下午好';
+                if (hour >= 17 && hour < 19) return '傍晚好';
+                if (hour >= 19 && hour < 22) return '晚上好';
+                return '夜深了';
+            }
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours();
+                const mins = now.getMinutes();
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minutesEl.textContent = String(mins).padStart(2, '0');
+                timeDateEl.textContent = `${year}年${month}月${day}日 ${getWeekday(now)}`;
+                timeGreetingEl.textContent = getGreeting(hours);
+                statusTimeEl.textContent = String(hours).padStart(2, '0') + ':' + String(mins).padStart(2, '0');
+                const batteryLevel = 65 + Math.sin(mins / 30 * Math.PI) * 20;
+                batteryFill.style.width = Math.min(100, Math.max(15, batteryLevel)) + '%';
+                colonEl.style.animation = 'none';
+                colonEl.offsetHeight;
+                colonEl.style.animation = 'colonBlink 1s step-end infinite';
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            function createRipple(event, element) {
+                const ripple = document.createElement('span');
+                const rect = element.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+                ripple.style.cssText = `position:absolute;width:${size}px;height:${size}px;left:${x}px;top:${y}px;background:rgba(255,255,255,0.25);border-radius:50%;pointer-events:none;transform:scale(0);animation:rippleEffect 0.6s ease-out forwards;z-index:20;`;
+                const origOverflow = element.style.overflow;
+                element.style.overflow = 'hidden';
+                element.style.position = element.style.position || 'relative';
+                element.appendChild(ripple);
+                ripple.addEventListener('animationend', () => {
+                    ripple.remove();
+                    element.style.overflow = origOverflow;
+                });
+            }
+            const rippleStyle = document.createElement('style');
+            rippleStyle.textContent = '@keyframes rippleEffect{0%{transform:scale(0);opacity:0.7}100%{transform:scale(3.5);opacity:0}}';
+            document.head.appendChild(rippleStyle);
+
+            function updateBatteryColor() {
+                const width = parseFloat(batteryFill.style.width) || 75;
+                batteryFill.style.background = width < 20 ? '#ff3b30' : width < 40 ? '#ffcc00' : '#ffffff';
+            }
+            const batteryObserver = new MutationObserver(updateBatteryColor);
+            batteryObserver.observe(batteryFill, { attributes: true, attributeFilter: ['style'] });
+            updateBatteryColor();
+
+            // 主屏幕交互
+            timeWidget.addEventListener('click', function(e) {
+                const now = new Date();
+                showToast(`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} 精确时间`);
+                createRipple(e, this);
+            });
+            searchBar.addEventListener('click', function(e) {
+                showToast('搜索功能已就绪');
+                createRipple(e, this);
+            });
+            homeIndicator.addEventListener('click', function() {
+                showToast('已回到主页');
+                this.style.transform = 'scaleY(1.6)';
+                setTimeout(() => { this.style.transform = 'scaleY(1)'; }, 200);
+            });
+
+            // API页面切换
+            function openApiPage() {
+                isApiPageOpen = true;
+                mainView.classList.add('hidden');
+                apiPage.classList.add('active');
+                apiPage.scrollTop = 0;
+                loadPresets();
+                updateStatusDot('idle');
+            }
+            function closeApiPage() {
+                isApiPageOpen = false;
+                mainView.classList.remove('hidden');
+                apiPage.classList.remove('active');
+            }
+            apiBackBtn.addEventListener('click', closeApiPage);
+
+            function updateStatusDot(status) {
+                apiStatusDot.className = 'api-status-dot ' + status;
+                const titles = { idle: '待配置', connected: '已连接', error: '连接失败', loading: '请求中...' };
+                apiStatusDot.title = titles[status] || '';
+            }
+
+            // 预设方案管理
+            function loadPresets() {
+                try {
+                    const raw = localStorage.getItem('api_presets');
+                    presets = raw ? JSON.parse(raw) : [];
+                } catch (e) { presets = []; }
+                if (presets.length === 0) {
+                    // 默认预设
+                    presets = [
+                        { id: 'default_openai', name: 'OpenAI 默认', provider: 'openai', baseUrl: 'https://api.openai.com/v1', apiKey: '' }
+                    ];
+                    savePresets();
+                }
+                if (!activePresetId && presets.length > 0) {
+                    activePresetId = presets[0].id;
+                    applyPreset(presets[0]);
+                }
+                renderPresetList();
+            }
+
+            function savePresets() {
+                localStorage.setItem('api_presets', JSON.stringify(presets));
+            }
+
+            function applyPreset(preset) {
+                activePresetId = preset.id;
+                selectProvider(preset.provider || 'openai');
+                apiBaseUrl.value = preset.baseUrl || '';
+                apiKey.value = preset.apiKey || '';
+                currentProvider = preset.provider || 'openai';
+                fetchedModels = [];
+                selectedModelId = null;
+                renderModelList();
+                updateStatusDot('idle');
+                renderPresetList();
+            }
+
+            function renderPresetList() {
+                presetListEl.innerHTML = presets.map(p => `
+                    <div class="preset-card${p.id === activePresetId ? ' active' : ''}" data-preset-id="${p.id}">
+                        <span>${p.name}</span>
+                        <button class="preset-delete-btn" data-delete="${p.id}" title="删除方案">x</button>
+                    </div>
+                `).join('');
+
+                presetListEl.querySelectorAll('.preset-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.preset-delete-btn')) return;
+                        const presetId = this.dataset.presetId;
+                        const preset = presets.find(p => p.id === presetId);
+                        if (preset) applyPreset(preset);
+                    });
+                });
+                presetListEl.querySelectorAll('.preset-delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const presetId = this.dataset.delete;
+                        if (presets.length <= 1) {
+                            showToast('至少保留一个方案');
+                            return;
+                        }
+                        presets = presets.filter(p => p.id !== presetId);
+                        savePresets();
+                        if (activePresetId === presetId) {
+                            activePresetId = presets[0].id;
+                            applyPreset(presets[0]);
+                        } else {
+                            renderPresetList();
+                        }
+                        showToast('方案已删除');
+                    });
+                });
+            }
+
+            addPresetBtn.addEventListener('click', function() {
+                const name = prompt('请输入方案名称：', '新方案');
+                if (!name || name.trim() === '') return;
+                const newPreset = {
+                    id: 'preset_' + Date.now(),
+                    name: name.trim(),
+                    provider: currentProvider,
+                    baseUrl: apiBaseUrl.value,
+                    apiKey: apiKey.value,
+                };
+                presets.push(newPreset);
+                savePresets();
+                activePresetId = newPreset.id;
+                renderPresetList();
+                showToast('方案已保存');
+            });
+
+            // 自动保存当前激活方案
+            function saveCurrentPreset() {
+                if (!activePresetId) return;
+                const preset = presets.find(p => p.id === activePresetId);
+                if (preset) {
+                    preset.provider = currentProvider;
+                    preset.baseUrl = apiBaseUrl.value;
+                    preset.apiKey = apiKey.value;
+                    savePresets();
+                }
+            }
+
+            [apiBaseUrl, apiKey].forEach(el => {
+                el.addEventListener('input', function() {
+                    updateStatusDot('idle');
+                    saveCurrentPreset();
+                });
+            });
+
+            // 提供商切换
+            const providerConfigs = {
+                openai: { baseUrl: 'https://api.openai.com/v1', modelsEndpoint: '/models', keyPrefix: 'sk-' },
+                anthropic: { baseUrl: 'https://api.anthropic.com/v1', modelsEndpoint: '/models', keyPrefix: 'sk-ant-' },
+                ollama: { baseUrl: 'http://localhost:11434', modelsEndpoint: '/api/tags', keyPrefix: '' },
+                custom: { baseUrl: '', modelsEndpoint: '/models', keyPrefix: '' },
+            };
+
+            function selectProvider(provider) {
+                currentProvider = provider;
+                const config = providerConfigs[provider];
+                apiBaseUrl.value = config.baseUrl;
+                document.querySelectorAll('.provider-chip').forEach(chip => {
+                    chip.classList.toggle('active', chip.dataset.provider === provider);
+                });
+                if (provider === 'ollama') {
+                    apiKey.placeholder = 'Ollama无需密钥';
+                } else {
+                    apiKey.placeholder = config.keyPrefix + '...';
+                }
+                fetchedModels = [];
+                selectedModelId = null;
+                renderModelList();
+                updateStatusDot('idle');
+                saveCurrentPreset();
+            }
+
+            providerChips.addEventListener('click', function(e) {
+                const chip = e.target.closest('.provider-chip');
+                if (!chip) return;
+                selectProvider(chip.dataset.provider);
+            });
+
+            toggleKeyBtn.addEventListener('click', function() {
+                const isPassword = apiKey.type === 'password';
+                apiKey.type = isPassword ? 'text' : 'password';
+                this.innerHTML = isPassword ?
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>' :
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            });
+
+            clearBaseUrlBtn.addEventListener('click', function() {
+                apiBaseUrl.value = '';
+                apiBaseUrl.focus();
+                saveCurrentPreset();
+            });
+
+            // 拉取模型 (仅真实API)
+            async function fetchModels() {
+                const baseUrl = apiBaseUrl.value.trim();
+                const key = apiKey.value.trim();
+                if (!baseUrl) {
+                    showToast('请先填写 Base URL');
+                    return;
+                }
+                updateStatusDot('loading');
+                fetchModelsBtn.disabled = true;
+                testConnBtn.disabled = true;
+                const originalText = fetchModelsBtn.innerHTML;
+                fetchModelsBtn.innerHTML = '<span class="spinner"></span> 拉取中...';
+
+                let models = null;
+                let success = false;
+                try {
+                    const config = providerConfigs[currentProvider];
+                    let endpoint;
+                    if (currentProvider === 'ollama') {
+                        endpoint = baseUrl.replace(/\/+$/, '') + '/api/tags';
+                    } else {
+                        endpoint = baseUrl.replace(/\/+$/, '') + '/models';
+                    }
+                    const headers = {};
+                    if (key && currentProvider !== 'ollama') {
+                        headers['Authorization'] = 'Bearer ' + key;
+                    }
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    const response = await fetch(endpoint, { method: 'GET', headers, signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (currentProvider === 'ollama') {
+                            models = (data.models || []).map(m => ({ id: m.name, name: m.name.replace(/:latest$/, '') }));
+                        } else {
+                            const list = data.data || data.models || [];
+                            models = list.map(m => ({ id: m.id, name: m.id }));
+                        }
+                        success = true;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (err) {
+                    console.error('拉取模型失败:', err.message);
+                }
+
+                fetchModelsBtn.disabled = false;
+                testConnBtn.disabled = false;
+                fetchModelsBtn.innerHTML = originalText;
+
+                if (success && models && models.length > 0) {
+                    fetchedModels = models;
+                    if (!selectedModelId) selectedModelId = fetchedModels[0].id;
+                    renderModelList();
+                    updateStatusDot('connected');
+                    showToast(`获取成功，共 ${fetchedModels.length} 个模型`);
+                } else {
+                    fetchedModels = [];
+                    renderModelList();
+                    updateStatusDot('error');
+                    showToast('拉取失败，请检查地址和密钥');
+                }
+                saveCurrentPreset();
+            }
+
+            function renderModelList() {
+                modelCount.textContent = fetchedModels.length + '个';
+                if (fetchedModels.length === 0) {
+                    modelListContainer.innerHTML = `<div class="empty-state"><span class="empty-icon">-</span><span>请填写 API 地址并点击「拉取模型」获取列表</span></div>`;
+                    return;
+                }
+                modelListContainer.innerHTML = fetchedModels.map(m => {
+                    const isSelected = m.id === selectedModelId;
+                    return `
+                        <div class="model-card${isSelected ? ' selected' : ''}" data-model-id="${m.id}">
+                            <div class="model-icon">M</div>
+                            <div class="model-info">
+                                <div class="model-name">${m.name}</div>
+                                <div class="model-id">${m.id}</div>
+                            </div>
+                            <button class="model-copy-btn" data-copy="${m.id}" title="复制模型ID">cp</button>
+                        </div>`;
+                }).join('');
+
+                modelListContainer.querySelectorAll('.model-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.model-copy-btn')) return;
+                        selectedModelId = this.dataset.modelId;
+                        renderModelList();
+                        showToast('已选中: ' + selectedModelId);
+                    });
+                });
+                modelListContainer.querySelectorAll('.model-copy-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.dataset.copy;
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(id).then(() => showToast('已复制: ' + id));
+                        } else {
+                            showToast('模型ID: ' + id);
+                        }
+                    });
+                });
+            }
+
+            async function testConnection() {
+                const baseUrl = apiBaseUrl.value.trim();
+                if (!baseUrl) { showToast('请先填写 Base URL'); return; }
+                updateStatusDot('loading');
+                testConnBtn.disabled = true;
+                fetchModelsBtn.disabled = true;
+                const originalText = testConnBtn.innerHTML;
+                testConnBtn.innerHTML = '<span class="spinner"></span> 测试中...';
+                let success = false;
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 6000);
+                    const headers = {};
+                    if (apiKey.value.trim() && currentProvider !== 'ollama') {
+                        headers['Authorization'] = 'Bearer ' + apiKey.value.trim();
+                    }
+                    const resp = await fetch(baseUrl.replace(/\/+$/, '') + '/models', { headers, signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    success = resp.ok;
+                } catch (e) { /* fallback */ }
+                updateStatusDot(success ? 'connected' : 'error');
+                showToast(success ? '连接成功' : '连接失败，请检查地址');
+                testConnBtn.disabled = false;
+                fetchModelsBtn.disabled = false;
+                testConnBtn.innerHTML = originalText;
+            }
+
+            fetchModelsBtn.addEventListener('click', fetchModels);
+            testConnBtn.addEventListener('click', testConnection);
+
+            // APP模块
+            const appFunctions = {
+                wechat: {
+                    open() { showToast('打开微信 · 3条新消息'); },
+                    getInfo() { return { unread: 3 }; }
+                },
+                api: {
+                    open() { openApiPage(); },
+                    getInfo() { return { models: fetchedModels.length }; }
+                },
+                worldbook: {
+                    open() { showToast('翻开世界书 · 探索知识'); },
+                    getInfo() { return { pages: 2048 }; }
+                },
+                beauty: {
+                    open() { showToast('打开美化 · 创意工坊'); },
+                    getInfo() { return { themes: 16 }; }
+                },
+                settings: {
+                    open() { showToast('打开设置 · 系统偏好'); },
+                    getInfo() { return { wifi: '已连接' }; }
+                },
+            };
+
+            appItems.forEach(item => {
+                const appKey = item.getAttribute('data-app');
+                item.addEventListener('click', function(e) {
+                    if (appKey && appFunctions[appKey]) {
+                        appFunctions[appKey].open();
+                    } else {
+                        showToast('打开 ' + this.getAttribute('data-label'));
+                    }
+                    createRipple(e, this.querySelector('.app-icon-wrapper'));
+                });
+
+                let longPressTimer;
+                const addLongPress = () => {
+                    longPressTimer = setTimeout(() => {
+                        const label = this.getAttribute('data-label');
+                        const info = appKey && appFunctions[appKey] ? appFunctions[appKey].getInfo() : null;
+                        showToast(info ? `${label} · ${JSON.stringify(info)}` : `${label} · 可拖拽编辑`);
+                    }, 600);
+                };
+                const clearLongPress = () => clearTimeout(longPressTimer);
+                item.addEventListener('touchstart', addLongPress, { passive: true });
+                item.addEventListener('touchend', clearLongPress);
+                item.addEventListener('touchmove', clearLongPress);
+                item.addEventListener('mousedown', addLongPress);
+                item.addEventListener('mouseup', clearLongPress);
+                item.addEventListener('mouseleave', clearLongPress);
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (isApiPageOpen) {
+                    if (e.key === 'Escape') { closeApiPage(); return; }
+                }
+                const keyMap = { w: 'wechat', a: 'api', s: 'worldbook', d: 'beauty', e: 'settings' };
+                if (keyMap[e.key] && appFunctions[keyMap[e.key]]) {
+                    appFunctions[keyMap[e.key]].open();
+                }
+            });
+
+            // 初始化
+            loadPresets();
+            renderModelList();
+            console.log('手机主页面已就绪，API管理支持真实拉取与方案保存');
+        })();
+    </script>
+</body>
+</html>
