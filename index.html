@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- 新增PWA全屏关键代码，去掉底部浏览器栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>手机主页面 · iPhone 11</title>
+    <style>
+        :root {
+            --bg-start: #1a1a2e;
+            --bg-mid: #16213e;
+            --bg-end: #0f0f1a;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.75);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --accent: #5B6ABF;
+            --accent-glow: rgba(91, 106, 191, 0.4);
+            --success: #34C759;
+            --danger: #FF3B30;
+            --warning: #FF9500;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+            --icon-size: 56px;
+            --icon-radius: 15px;
+            --icon-gap: 20px;
+            --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --input-bg: rgba(255, 255, 255, 0.06);
+            --input-border: rgba(255, 255, 255, 0.14);
+            --input-focus-border: rgba(140, 150, 220, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover-bg: rgba(255, 255, 255, 0.09);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #0a0a14;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            padding: 16px;
+        }
+        .phone-frame {
+            position: relative;
+            width: 414px;
+            min-width: 414px;
+            height: 896px;
+            background: #0d0d1a;
+            border-radius: 44px;
+            overflow: hidden;
+            box-shadow: 0 0 0 3px #1a1a2e, 0 0 0 6px #111122, 0 0 0 8px #1c1c32, 0 0 0 10px #0a0a16, 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 120px rgba(90, 100, 180, 0.12);
+            transition: transform var(--transition-smooth);
+        }
+        .phone-frame:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 0 3px #1a1a2e, 0 0 0 6px #111122, 0 0 0 8px #1c1c32, 0 0 0 10px #0a0a16, 0 28px 70px rgba(0, 0, 0, 0.75), 0 0 150px rgba(90, 100, 180, 0.18);
+        }
+        .screen {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            right: 10px;
+            bottom: 12px;
+            border-radius: 34px;
+            overflow: hidden;
+            background: linear-gradient(160deg, #1a1a30 0%, #151528 20%, #1c1d38 40%, #141a2e 60%, #0f1525 80%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            cursor: default;
+        }
+        .wallpaper {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 34px;
+            overflow: hidden;
+        }
+        .wallpaper-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.55;
+            animation: glowFloat 12s ease-in-out infinite;
+        }
+        .glow-1 {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(120, 100, 210, 0.7) 0%, transparent 70%);
+            top: -60px;
+            left: -40px;
+            animation-delay: 0s;
+        }
+        .glow-2 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(220, 130, 100, 0.55) 0%, transparent 70%);
+            bottom: 20%;
+            right: -50px;
+            animation-delay: -5s;
+        }
+        .glow-3 {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(100, 160, 220, 0.5) 0%, transparent 70%);
+            top: 40%;
+            left: 30%;
+            animation-delay: -8s;
+        }
+        .glow-4 {
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(200, 120, 160, 0.45) 0%, transparent 70%);
+            bottom: 30%;
+            left: 10%;
+            animation-delay: -3s;
+        }
+        @keyframes glowFloat {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -25px) scale(1.08);
+            }
+            50% {
+                transform: translate(-15px, 20px) scale(0.94);
+            }
+            75% {
+                transform: translate(-25px, -10px) scale(1.05);
+            }
+        }
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 34px;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: floatUp 8s ease-in infinite;
+            opacity: 0;
+        }
+        .particle:nth-child(1) {
+            left: 10%;
+            bottom: -10px;
+            animation-delay: 0s;
+            animation-duration: 7s;
+        }
+        .particle:nth-child(2) {
+            left: 28%;
+            bottom: -10px;
+            animation-delay: 2.5s;
+            animation-duration: 9s;
+        }
+        .particle:nth-child(3) {
+            left: 46%;
+            bottom: -10px;
+            animation-delay: 5s;
+            animation-duration: 7.5s;
+        }
+        .particle:nth-child(4) {
+            left: 64%;
+            bottom: -10px;
+            animation-delay: 1.5s;
+            animation-duration: 8.5s;
+        }
+        .particle:nth-child(5) {
+            left: 80%;
+            bottom: -10px;
+            animation-delay: 4s;
+            animation-duration: 6.8s;
+        }
+        .particle:nth-child(6) {
+            left: 18%;
+            bottom: -10px;
+            animation-delay: 6s;
+            animation-duration: 9.5s;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(-60px) translateX(10px) scale(1.2);
+            }
+            30% {
+                opacity: 0.5;
+                transform: translateY(-180px) translateX(-15px) scale(0.8);
+            }
+            60% {
+                opacity: 0.2;
+                transform: translateY(-380px) translateX(20px) scale(0.4);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-650px) translateX(-10px) scale(0);
+            }
+        }
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            padding: 0 20px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .content-layer.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.96);
+        }
+        .status-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 4px 10px 4px;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .status-left .time-text {
+            font-variant-numeric: tabular-nums;
+            font-family: 'SF Pro Display', -apple-system, 'Helvetica Neue', sans-serif;
+            font-weight: 590;
+            letter-spacing: 0.2px;
+        }
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .signal-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 1.5px;
+            height: 12px;
+        }
+        .signal-bar {
+            width: 3px;
+            background: #fff;
+            border-radius: 1px;
+        }
+        .signal-bar:nth-child(1) {
+            height: 4px;
+        }
+        .signal-bar:nth-child(2) {
+            height: 6px;
+        }
+        .signal-bar:nth-child(3) {
+            height: 9px;
+        }
+        .signal-bar:nth-child(4) {
+            height: 12px;
+        }
+        .wifi-icon {
+            width: 14px;
+            height: 14px;
+        }
+        .wifi-icon svg {
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+        .battery {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .battery-body {
+            width: 24px;
+            height: 11px;
+            border: 1.5px solid #fff;
+            border-radius: 3px;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+        }
+        .battery-fill {
+            width: 75%;
+            height: 100%;
+            background: #fff;
+            border-radius: 1px;
+            transition: width 0.5s;
+        }
+        .battery-cap {
+            width: 2.5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 0 1.5px 1.5px 0;
+        }
+        .time-widget {
+            margin-top: 18px;
+            flex-shrink: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid var(--glass-border);
+            border-radius: 26px;
+            padding: 20px 30px 18px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: all var(--transition-smooth);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        .time-widget:hover {
+            box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .time-widget:active {
+            transform: scale(0.97);
+        }
+        .time-main {
+            font-size: 52px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #fff;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            font-family: 'SF Pro Display', -apple-system, 'Helvetica Neue', 'PingFang SC', sans-serif;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+        .time-colon {
+            animation: colonBlink 1s step-end infinite;
+            font-weight: 200;
+            margin: 0 -2px;
+        }
+        @keyframes colonBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.25;
+            }
+        }
+        .time-date {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            letter-spacing: 0.4px;
+        }
+        .time-greeting {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        .search-bar {
+            margin-top: 22px;
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 280px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 19px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 8px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        .search-bar:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .search-bar:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.13);
+        }
+        .search-icon {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            opacity: 0.55;
+        }
+        .search-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+        .app-icons-row {
+            margin-top: auto;
+            margin-bottom: auto;
+            flex-shrink: 0;
+            display: flex;
+            gap: var(--icon-gap);
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 0;
+            flex-wrap: nowrap;
+        }
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform var(--transition-fast);
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .app-item:active .app-icon-wrapper {
+            transform: scale(0.86);
+            transition: transform 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .app-icon-wrapper {
+            width: var(--icon-size);
+            height: var(--icon-size);
+            border-radius: var(--icon-radius);
+            box-shadow: var(--shadow-md), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .app-icon-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 35%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: var(--icon-radius) var(--icon-radius) 0 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .app-item:hover .app-icon-wrapper {
+            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.18);
+            transform: translateY(-3px);
+        }
+        .app-icon-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--icon-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            transition: filter 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .icon-wechat {
+            background: linear-gradient(145deg, #1fcf6b 0%, #06b850 30%, #059a42 100%);
+        }
+        .icon-api {
+            background: linear-gradient(145deg, #7b8cd6 0%, #4a5cb5 30%, #3a4a9e 100%);
+        }
+        .icon-book {
+            background: linear-gradient(145deg, #f0a860 0%, #d87d35 30%, #c06828 100%);
+        }
+        .icon-beauty {
+            background: linear-gradient(145deg, #f07085 0%, #d94a62 30%, #c23850 100%);
+        }
+        .icon-settings {
+            background: linear-gradient(145deg, #9eaab8 0%, #6b7b8d 30%, #4a5b6e 100%);
+        }
+        .app-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.82);
+            letter-spacing: 0.3px;
+            text-align: center;
+            transition: color 0.2s;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
+        }
+        .app-item:hover .app-label {
+            color: #fff;
+        }
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 19px;
+            height: 19px;
+            background: #ff3b30;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(255, 59, 48, 0.5);
+            animation: badgePulse 2.5s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%,
+            100% {
+                box-shadow: 0 2px 6px rgba(255, 59, 48, 0.5);
+            }
+            50% {
+                box-shadow: 0 2px 14px rgba(255, 59, 48, 0.75), 0 0 0 4px rgba(255, 59, 48, 0.15);
+            }
+        }
+        .home-indicator {
+            flex-shrink: 0;
+            width: 134px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .home-indicator:hover {
+            background: rgba(255, 255, 255, 0.75);
+            width: 150px;
+        }
+        .toast {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30, 30, 50, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 22px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 30;
+            white-space: nowrap;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        /* API页面 */
+        .api-page {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            background: rgba(14, 14, 28, 0.95);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border-radius: 34px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        .api-page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .api-page::-webkit-scrollbar {
+            width: 3px;
+        }
+        .api-page::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        .api-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px 12px 18px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            background: rgba(14, 14, 28, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .api-back-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+            color: #fff;
+        }
+        .api-back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+        .api-back-btn:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .api-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .api-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: auto;
+            flex-shrink: 0;
+            transition: background 0.4s;
+        }
+        .api-status-dot.idle {
+            background: #666;
+        }
+        .api-status-dot.connected {
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.5);
+        }
+        .api-status-dot.error {
+            background: var(--danger);
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.5);
+        }
+        .api-status-dot.loading {
+            background: var(--warning);
+            box-shadow: 0 0 8px rgba(255, 149, 0, 0.5);
+            animation: loadingPulse 0.8s ease-in-out infinite;
+        }
+        @keyframes loadingPulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.35;
+            }
+        }
+        .api-body {
+            flex: 1;
+            padding: 16px 18px 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .provider-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .provider-chip {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+        .provider-chip:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+        .provider-chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 12px var(--accent-glow);
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .input-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 14px;
+            padding: 0 14px;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+        .input-row:focus-within {
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 3px rgba(140, 150, 220, 0.08);
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .input-row input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 12px 0;
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            letter-spacing: 0.2px;
+            min-width: 0;
+        }
+        .input-row input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        }
+        .input-icon-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+        }
+        .input-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .input-icon-btn:active {
+            transform: scale(0.88);
+        }
+        .api-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-fast);
+            letter-spacing: 0.3px;
+            width: 100%;
+        }
+        .api-btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .api-btn-primary:hover {
+            background: #6b7dd4;
+            box-shadow: 0 6px 22px rgba(91, 106, 191, 0.55);
+            transform: translateY(-1px);
+        }
+        .api-btn-primary:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px var(--accent-glow);
+        }
+        .api-btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .api-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .api-btn:disabled {
+            opacity: 0.45;
+            pointer-events: none;
+            filter: grayscale(30%);
+        }
+        .api-btn-row {
+            display: flex;
+            gap: 10px;
+        }
+        .api-btn-row .api-btn {
+            flex: 1;
+        }
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .model-list-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .model-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .model-list-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+        }
+        .model-count {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+        .model-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+        .model-card:hover {
+            background: var(--card-hover-bg);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(2px);
+        }
+        .model-card.selected {
+            border-color: var(--accent);
+            background: rgba(91, 106, 191, 0.12);
+            box-shadow: 0 0 0 2px rgba(91, 106, 191, 0.15);
+        }
+        .model-card.selected::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .model-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .model-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .model-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.2px;
+        }
+        .model-id {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+        .model-tag {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-tertiary);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .model-copy-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        .model-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-tertiary);
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .empty-state .empty-icon {
+            font-size: 40px;
+            opacity: 0.5;
+        }
+        /* 预设方案管理 */
+        .preset-section {
+            margin-top: 4px;
+        }
+        .preset-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .preset-header .input-label {
+            margin-bottom: 0;
+        }
+        .preset-add-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all var(--transition-fast);
+        }
+        .preset-add-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .preset-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .preset-card {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .preset-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .preset-card.active {
+            border-color: var(--accent);
+            background: rgba(91, 106, 191, 0.15);
+            color: #fff;
+        }
+        .preset-delete-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+            margin-left: 4px;
+        }
+        .preset-delete-btn:hover {
+            background: rgba(255, 59, 48, 0.3);
+            color: #fff;
+        }
+        .api-safe-bottom {
+            height: 30px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 440px) {
+            body {
+                padding: 0;
+                background: #0d0d1a;
+                align-items: flex-start;
+            }
+            .phone-frame {
+                width: 100%;
+                min-width: unset;
+                height: 100vh;
+                height: 100dvh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .phone-frame:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .screen {
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            .api-page {
+                border-radius: 0;
+            }
+            .wallpaper,
+            .particles {
+                border-radius: 0;
+                inset: 0;
+            }
+            .content-layer {
+                padding: 0 16px;
+                padding-bottom: calc(6px + env(safe-area-inset-bottom));
+                height: 100%;
+            }
+            .status-bar {
+                padding-top: 12px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .time-widget {
+                margin-top: 14px;
+                padding: 18px 24px 16px 24px;
+                border-radius: 22px;
+            }
+            .time-main {
+                font-size: 46px;
+            }
+            .app-icons-row {
+                gap: 16px;
+            }
+            .app-icon-wrapper {
+                width: 50px;
+                height: 50px;
+                border-radius: 13px;
+            }
+            .app-icon-inner {
+                font-size: 23px;
+            }
+            .app-label {
+                font-size: 10px;
+            }
+            .search-bar {
+                margin-top: 18px;
+                max-width: 250px;
+                height: 34px;
+                border-radius: 17px;
+                font-size: 12px;
+            }
+            .home-indicator {
+                margin-bottom: 0;
+            }
+            .toast {
+                bottom: calc(65px + env(safe-area-inset-bottom));
+            }
+            .badge {
+                width: 17px;
+                height: 17px;
+                font-size: 9px;
+                top: -4px;
+                right: -4px;
+            }
+            .api-header {
+                padding: 12px 14px 10px 14px;
+            }
+            .api-body {
+                padding: 12px 14px 16px 14px;
+                gap: 12px;
+            }
+            .api-safe-bottom {
+                height: 20px;
+            }
+        }
+        @media (max-width: 380px) {
+            .content-layer {
+                padding: 0 10px;
+                padding-bottom: calc(4px + env(safe-area-inset-bottom));
+            }
+            .app-icons-row {
+                gap: 11px;
+            }
+            .app-icon-wrapper {
+                width: 44px;
+                height: 44px;
+                border-radius: 11px;
+            }
+            .app-icon-inner {
+                font-size: 20px;
+            }
+            .app-label {
+                font-size: 9px;
+            }
+            .time-main {
+                font-size: 40px;
+            }
+            .time-widget {
+                padding: 14px 18px 12px 18px;
+                border-radius: 18px;
+            }
+            .search-bar {
+                max-width: 210px;
+                height: 30px;
+                border-radius: 15px;
+                padding: 0 10px;
+                gap: 6px;
+            }
+            .badge {
+                width: 15px;
+                height: 15px;
+                font-size: 8px;
+                top: -3px;
+                right: -3px;
+            }
+            .provider-chip {
+                padding: 6px 10px;
+                font-size: 10px;
+                border-radius: 16px;
+            }
+            .api-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+                border-radius: 12px;
+            }
+            .model-card {
+                padding: 10px 12px;
+                border-radius: 12px;
+                gap: 8px;
+            }
+            .model-icon {
+                width: 32px;
+                height: 32px;
+                border-radius: 8px;
+                font-size: 15px;
+            }
+            .model-name {
+                font-size: 12px;
+            }
+            .model-id {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="screen" id="screen">
+            <div class="wallpaper">
+                <div class="wallpaper-glow glow-1"></div>
+                <div class="wallpaper-glow glow-2"></div>
+                <div class="wallpaper-glow glow-3"></div>
+                <div class="wallpaper-glow glow-4"></div>
+            </div>
+            <div class="particles">
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            </div>
+            <!-- 主屏幕 -->
+            <div class="content-layer" id="mainView">
+                <div class="status-bar">
+                    <div class="status-left"><span class="time-text" id="statusTime">9:41</span></div>
+                    <div class="status-icons">
+                        <div class="signal-bars"><div class="signal-bar"></div><div class="signal-bar"></div><div class="signal-bar"></div><div class="signal-bar"></div></div>
+                        <div class="wifi-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 12.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z" fill="white" opacity="0.9" /><path d="M5.6 10.2a3.4 3.4 0 0 1 4.8 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8" /><path d="M3.4 7.8a6.5 6.5 0 0 1 9.2 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7" /><path d="M1.2 5.4a9.6 9.6 0 0 1 13.6 0" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.6" /></svg></div>
+                        <div class="battery"><div class="battery-fill" id="batteryFill"></div><div class="battery-cap"></div></div>
+                    </div>
+                </div>
+                <div class="time-widget" id="timeWidget">
+                    <div class="time-main"><span id="hours">14</span><span class="time-colon" id="colon">:</span><span id="minutes">30</span></div>
+                    <div class="time-date" id="timeDate">2026年7月16日</div>
+                    <div class="timeGreeting" id="timeGreeting">下午好</div>
+                </div>
+                <div class="search-bar" id="searchBar">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2" opacity="0.6" /><path d="M16.5 16.5l4 4" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /></svg>
+                    <span class="search-text">搜索</span>
+                </div>
+                <div class="app-icons-row">
+                    <div class="app-item" data-app="wechat" data-label="微信">
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-wechat"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M22 13c0 3.87-3.58 7-8 7-.7 0-1.38-.08-2.04-.22-.54.32-1.48.72-2.46.72-.22 0-.4-.18-.36-.4.04-.2.2-.68.38-1.1C8.3 18.1 7.5 16.9 7.5 15.5 7.5 12.46 10.58 10 14.5 10S22 12.46 22 15.5z" fill="white" opacity="0.95" /><path d="M26 18c0 2.5-2.5 4.5-5.5 4.5-.5 0-1-.06-1.5-.18-.4.22-1.1.52-1.8.52-.16 0-.3-.14-.28-.3.02-.14.14-.48.28-.78-.7-.6-1.2-1.4-1.2-2.3 0-1.9 2-3.5 4.5-3.5s4.5 1.6 4.5 3.5z" fill="white" opacity="0.75" /></svg></div>
+<span class="badge">3</span></div>
+                        <span class="app-label">微信</span>
+                    </div>
+                    <div class="app-item" data-app="api" data-label="API">
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-api"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="3" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><path d="M8 10l3 4-3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" /><path d="M20 10l-3 4 3 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" /><line x1="13" y1="9" x2="15" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7" /></svg></div></div>
+                        <span class="app-label">API</span>
+                    </div>
+                    <div class="app-item" data-app="worldbook" data-label="世界书">
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-book"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><path d="M5 4h7l1.5 2H23a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><circle cx="10" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.8" /><ellipse cx="10" cy="14" rx="5" ry="2" stroke="white" stroke-width="1.5" fill="none" opacity="0.6" transform="rotate(-15 10 14)" /><line x1="10" y1="9" x2="10" y2="19" stroke="white" stroke-width="1.5" opacity="0.55" /><line x1="5" y1="14" x2="15" y2="14" stroke="white" stroke-width="1.5" opacity="0.55" /></svg></div></div>
+                        <span class="app-label">世界书</span>
+                    </div>
+                    <div class="app-item" data-app="beauty" data-label="美化">
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-beauty"><svg width="25" height="25" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="9" stroke="white" stroke-width="2" fill="none" opacity="0.85" /><circle cx="14" cy="14" r="4" fill="white" opacity="0.5" /><path d="M21 8l3-3" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.8" /><path d="M22.5 5.5l-1.5 1.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7" /><circle cx="22" cy="5" r="1.5" fill="white" opacity="0.9" /></svg></div></div>
+                        <span class="app-label">美化</span>
+                    </div>
+                    <div class="app-item" data-app="settings" data-label="设置">
+                        <div class="app-icon-wrapper"><div class="app-icon-inner icon-settings"><svg width="26" height="26" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="5" stroke="white" stroke-width="2" fill="none" opacity="0.9" /><circle cx="14" cy="14" r="2" fill="white" opacity="0.8" /><line x1="14" y1="3" x2="14" y2="7" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="14" y1="21" x2="14" y2="25" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="3" y1="14" x2="7" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="21" y1="14" x2="25" y2="14" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.85" /><line x1="6.5" y1="6.5" x2="9" y2="9" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="19" y1="19" x2="21.5" y2="21.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="6.5" y1="21.5" x2="9" y2="19" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /><line x1="19" y1="9" x2="21.5" y2="6.5" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6" /></svg></div></div>
+                        <span class="app-label">设置</span>
+                    </div>
+                </div>
+                <div class="home-indicator" id="homeIndicator"></div>
+            </div>
+            <!-- API管理页面 -->
+            <div class="api-page" id="apiPage">
+                <div class="api-header">
+                    <button class="api-back-btn" id="apiBackBtn" title="返回主屏幕">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+                    </button>
+                    <span class="api-title">API 管理</span>
+                    <div class="api-status-dot idle" id="apiStatusDot" title="连接状态"></div>
+                </div>
+                <div class="api-body">
+                    <!-- 预设方案 -->
+                    <div class="preset-section">
+                        <div class="preset-header">
+                            <span class="input-label">已保存的方案</span>
+                            <button class="preset-add-btn" id="addPresetBtn" title="保存当前配置为新方案">+</button>
+                        </div>
+                        <div class="preset-list" id="presetList"></div>
+                    </div>
+                    <!-- 提供商预设 -->
+                    <div class="input-group">
+                        <span class="input-label">提供商预设</span>
+                        <div class="provider-chips" id="providerChips">
+                            <span class="provider-chip active" data-provider="openai">OpenAI</span>
+                            <span class="provider-chip" data-provider="anthropic">Anthropic</span>
+                            <span class="provider-chip" data-provider="ollama">Ollama</span>
+                            <span class="provider-chip" data-provider="custom">自定义</span>
+                        </div>
+                    </div>
+                    <!-- Base URL -->
+                    <div class="input-group">
+                        <span class="input-label">Base URL</span>
+                        <div class="input-row">
+                            <input type="text" id="apiBaseUrl" placeholder="https://api.openai.com/v1" value="https://api.openai.com/v1" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+                            <button class="input-icon-btn" id="clearBaseUrlBtn" title="清空">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- API Key -->
+                    <div class="input-group">
+                        <span class="input-label">API Key</span>
+                        <div class="input-row">
+                            <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+                            <button class="input-icon-btn" id="toggleKeyBtn" title="显示/隐藏">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 操作按钮 -->
+                    <div class="api-btn-row">
+                        <button class="api-btn api-btn-primary" id="fetchModelsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m18 0a9 9 0 0 1-4.5 7.8M12 21a9 9 0 0 1-4.5-7.8M12 21V3" /></svg>
+                            拉取模型
+                        </button>
+                        <button class="api-btn api-btn-secondary" id="testConnBtn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            测试连接
+                        </button>
+                    </div>
+                    <!-- 模型列表 -->
+                    <div class="model-list-section" id="modelListSection">
+                        <div class="model-list-header">
+                            <span class="model-list-title">可用模型
